@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    //esModuleInterop позволяет работать с пакетами, которые используют
+    //common js как с обычными пакетами с помощью import (require() module.export) = common js
+    //без флага esModuleInterop результат undefined
+    //console.log(Moment)
+    //если какая-нибудь библиотека не имеет default import
+    //лоадеры вроде ts-loader  автоматически создают их вместо такого импорта
+    // import * as React from 'react'
+    // можно писать такой
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}
