@@ -1,13 +1,13 @@
 import {createRoot} from 'react-dom/client';
 import {App} from "./App"
 import React from 'react';
-import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+import {RouterProvider, createHashRouter} from 'react-router-dom'
 import Form from "./pages/form/Form";
 import ButtonPage from "./pages/buttonsPage/ButtonPage";
 import Data from "./pages/data/Data";
 
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <App/>,
