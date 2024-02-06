@@ -37,12 +37,10 @@ export default (env: EnvVariables) => {
           exclude: /node_modules/,
         },
         {
-          test: /\.less$/i,
+          test: /\.(css)$/,
           use: [
-            MiniCssExtractPlugin.loader,
-            // 'style-loader',
-            "css-loader",
-            "less-loader",
+            'style-loader',
+            'css-loader'
           ],
         },
       ],
@@ -53,7 +51,8 @@ export default (env: EnvVariables) => {
     devtool: isDev ? 'inline-source-map' : undefined,
     devServer: isDev ? {
       port: env.port ?? 3000,
-      open: true
+      open: true,
+      historyApiFallback: true,
     } : undefined,
   }
 

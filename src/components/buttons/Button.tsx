@@ -1,17 +1,45 @@
-import React, {MouseEvent} from 'react';
+import React, {useState, MouseEvent} from 'react';
+import classNames from "classnames";
+import './button.css'
+
 
 export type ButtonPropsType = {
-  title?: string,
-  onClick?: () => void;
-  style?: string
+  children?: React.ReactNode
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
+  className?: 'default' | 'dashed' | 'primary'
+  active?: boolean
+  disabled?: boolean
+  type?: 'submit' | 'reset' | 'button' | undefined;
 }
 
-const Button: React.FC<ButtonPropsType> = ({title, onClick, style}) => {
+const Button: React.FC<ButtonPropsType> = ({
+                                             children,
+                                             onClick,
+                                             className,
+                                             disabled = false,
+                                             active = false,
+                                             type
+                                           }) => {
+
+  const [activeBtn, setActiveBtn] = useState<boolean>(active)
+
+  const classes = classNames(
+    'btn', className, {active: activeBtn}
+  )
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    onClick && onClick(e)
+    setActiveBtn((state) => !state)
+  }
 
   return (
-    <div>
-      <button onClick={onClick}>{title}</button>
-    </div>
+    <button type={type}
+            className={classes}
+            onClick={handleClick}
+            disabled={disabled}
+    >
+      {children}
+    </button>
   );
 };
 
