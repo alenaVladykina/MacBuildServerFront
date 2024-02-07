@@ -5,7 +5,7 @@ import './input.css'
 type PropsTypes = {
   onChange?: (value: string) => void
   label?: string
-  value?: string | number | undefined;
+  value?: string | number
   onBlur?: (value: FocusEvent<HTMLInputElement>) => void
   name?: string
   type: string
@@ -29,13 +29,12 @@ export const Input: React.FC<PropsTypes> = ({
     onBlur && onBlur(e);
   }
 
-
   return (
-    <label htmlFor={name} className={'label'}>{label}
+    <label htmlFor={name} className='label'>{label}
       <input onBlur={onBlurHandler}
              value={value}
              type={type}
-             className={'input'}
+             className='input'
              onChange={onChangeHandler}
       />
     </label>

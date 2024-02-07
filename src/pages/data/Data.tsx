@@ -5,17 +5,15 @@ import './data.css'
 
 
 const Data = () => {
-  const [currentValue, setCurrentValue] = useState<number>(new Date().getFullYear());
-  const [newValue, setNewValue] = useState<number>(new Date().getFullYear());
+  const currentYear = new Date().getFullYear();
+  const [currentValue, setCurrentValue] = useState<number>(currentYear);
+  const [newValue, setNewValue] = useState<number>(currentYear);
   const [isEdit, setIsEdit] = useState<boolean>(false);
-  const [error, setError] = useState<false | string>(false)
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    if (newValue.toString().length < 4 || newValue < 1900 || newValue > 2024) {
-      setError('Введена некорректная дата')
-    } else {
-      setError(false)
-    }
+    const checkYear = newValue.toString().length < 4 || newValue < 1900 || newValue > currentYear;
+    setError(checkYear ? 'Введена некорректная дата' : '')
   }, [newValue])
 
 
@@ -28,16 +26,16 @@ const Data = () => {
   }
 
   const onSave = (e: (FormEvent<HTMLFormElement | HTMLButtonElement>)) => {
-    e.preventDefault()
+    e.preventDefault();
     setCurrentValue(newValue);
     setIsEdit(false);
   }
 
   return (
-    <div className={'data'}>
+    <div className='data'>
       <h2>Дата рождения</h2>
       {isEdit ? (
-        <form className={'data_save'} onSubmit={onSave}>
+        <form className='data_save' onSubmit={onSave}>
           <Input type='number'
                  value={newValue}
                  onChange={onChange}/>
@@ -48,12 +46,12 @@ const Data = () => {
                   disabled={Boolean(error)}>
             Save
           </Button>
-          {error && <p className={'error'}>{error}</p>}
+          {error && <p className='error'>{error}</p>}
         </form>
       ) : (
-        <div className={'data_edit'}>
-          <div className={'data_edit_item'}>{currentValue}</div>
-          <Button className={'default'}
+        <div className='data_edit'>
+          <div className='data_edit_item'>{currentValue}</div>
+          <Button className='default'
                   onClick={onEdit}
                   disabled={Boolean(error)}>
             Edit

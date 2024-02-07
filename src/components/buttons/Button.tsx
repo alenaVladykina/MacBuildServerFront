@@ -9,7 +9,7 @@ export type ButtonPropsType = {
   className?: 'default' | 'dashed' | 'primary'
   active?: boolean
   disabled?: boolean
-  type?: 'submit' | 'reset' | 'button' | undefined;
+  type?: 'submit' | 'reset' | 'button'
 }
 
 const Button: React.FC<ButtonPropsType> = ({
@@ -21,15 +21,15 @@ const Button: React.FC<ButtonPropsType> = ({
                                              type
                                            }) => {
 
-  const [activeBtn, setActiveBtn] = useState<boolean>(active)
+  const [activeBtn, setActiveBtn] = useState<boolean>(active);
 
   const classes = classNames(
     'btn', className, {active: activeBtn}
   )
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    onClick && onClick(e)
-    setActiveBtn((state) => !state)
+    onClick && onClick(e);
+    setActiveBtn((state) => !state);
   }
 
   return (
