@@ -39,7 +39,7 @@ const Data = () => {
           <Input type='number'
                  value={newValue}
                  onChange={onChange}/>
-          <Button className='default'
+          <Button className='primary'
                   type='submit'
                   active={false}
                   onClick={onSave}
@@ -51,7 +51,7 @@ const Data = () => {
       ) : (
         <div className='data_edit'>
           <div className='data_edit_item'>{currentValue}</div>
-          <Button className='default'
+          <Button className='primary'
                   onClick={onEdit}
                   disabled={Boolean(error)}>
             Edit

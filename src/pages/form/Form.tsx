@@ -28,8 +28,8 @@ const Form = () => {
       <h2> {value ? value : 'Введите email'} </h2>
       <form onSubmit={handleSubmit}>
         <Input type='text' value={email} name='email' onChange={onChange}/>
-        <Button type='submit' className='default' disabled={Boolean(error)}>Отправить</Button>
-        {(error) && <p>{error}</p>}
+        <Button type='submit' className='primary' disabled={Boolean(error)}>Отправить</Button>
+        {(error) && <p className='error' style={{'color': 'error'}}>{error}</p>}
       </form>
     </section>
 
