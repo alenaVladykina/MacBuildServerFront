@@ -28,5 +28,3 @@ export type TableColumnsType = {
   key: string,
 }
 
-
-type ColumnsType<T extends object> = TableProps<T>['columns'];

@@ -1,28 +1,59 @@
-import {action, makeObservable, observable, remove, runInAction} from "mobx";
-import type {IRootStore} from "./index";
-import type {ITask} from "./task";
+import {PriorityTaskType, StatusTaskType} from "../types";
+import {action, makeObservable, observable, runInAction} from "mobx";
 import {apiTask} from "../api/api";
+import {IRootStore} from "./index";
 
-export class TaskStore {
-  tasks: ITask[] = [];
 
-  constructor(rootStore: IRootStore) {
+export interface ITask {
+  key: string
+  create: Date
+  update: Date
+  deadline: Date
+  title: string
+  description: string
+  status: StatusTaskType
+  priority: PriorityTaskType
+}
+
+export class TaskStore implements ITask {
+  key = ''
+  create: Date = new Date()
+  update: Date = new Date()
+  deadline: Date = new Date()
+  title = ''
+  description = ''
+  status: StatusTaskType = 'Planned'
+  priority: PriorityTaskType = 'Low'
+
+  constructor() {
     makeObservable(this, {
-      tasks: observable,
-      addTask: action.bound,
-      remove: action,
-      update: action,
-      fetch: action
+      fetch: action.bound,
+      edit: action.bound,
+      key: observable,
+      create: observable,
+      update: observable,
+      deadline: observable,
+      title: observable,
+      description: observable,
+      status: observable,
+      priority: observable,
     });
   }
 
-  async fetch() {
+  async fetch(taskId: string) {
     try {
-      const res = await apiTask.fetch()
+      const res = await apiTask.fetchTask(taskId)
       if (res.ok) {
         const data = await res.json();
         runInAction(() => {
-          this.tasks = data
+          this.key = data.key
+          this.create = data.create
+          this.update = data.update
+          this.deadline = data.deadline
+          this.title = data.title
+          this.description = data.description
+          this.status = data.status
+          this.priority = data.priority
         })
       }
     } catch (error: any) {
@@ -30,59 +61,11 @@ export class TaskStore {
     }
   }
 
-  async fetchTask() {
+  async edit(task: ITask) {
     try {
-      const res = await apiTask.fetch()
-      if (res.ok) {
-        const data = await res.json();
-        runInAction(() => {
-          this.tasks = data
-        })
-      }
+      await apiTask.updateTask(task)
     } catch (error: any) {
       console.log(error)
     }
-  }
-
-  async addTask(title: string) {
-    try {
-      const res = await apiTask.create(title)
-      if (res.ok) {
-        const task = await res.json();
-        runInAction(() => {
-          this.tasks.push(task)
-        })
-      }
-    } catch (error: any) {
-      console.log('Error')
-    }
-  }
-
-  async remove(key: string) {
-    try {
-      const res = await apiTask.remove(key)
-      if (res.ok) {
-        runInAction(() => {
-          const pos = this.tasks.findIndex(task => task.key === key);
-          pos > -1 && remove(this.tasks, pos.toString());
-        })
-      }
-    } catch (error: any) {
-      console.log('Error')
-    }
-  }
-
-  async update(task: ITask) {
-    //   try {
-    //     const res = await apiTask.update(task)
-    //     if (res.ok) {
-    //       runInAction(() => {
-    //         const pos = this.tasks.findIndex(task => task.key === key);
-    //         pos > -1 && remove(this.tasks, pos.toString());
-    //       })
-    //     }
-    //   } catch (error: any) {
-    //     console.log('Error')
-    //   }
   }
 }

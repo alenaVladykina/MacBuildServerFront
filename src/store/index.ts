@@ -1,20 +1,23 @@
 import {createContext} from "react";
-import {TaskStore} from "./taskStore";
 import {UserStore} from "./userStore";
 import type {IUserType} from "./userStore";
+import {TasksStore} from "./tasksStore";
+import {TaskStore} from "./taskStore";
 
 
 export interface IRootStore {
-  tasksStore: TaskStore
+  tasksStore: TasksStore
 }
 
 class RootStore implements IRootStore {
-  tasksStore: TaskStore;
+  tasksStore: TasksStore;
   userStore: IUserType;
+  taskStore: TaskStore;
 
   constructor() {
-    this.tasksStore = new TaskStore(this);
-    this.userStore = new UserStore(this)
+    this.tasksStore = new TasksStore(this);
+    this.userStore = new UserStore(this);
+    this.taskStore = new TaskStore();
   }
 }
 
