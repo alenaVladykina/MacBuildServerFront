@@ -56,7 +56,6 @@ export default (env: EnvVariables) => {
       historyApiFallback: true,
     } : undefined,
   }
-
   return config
 };
 
