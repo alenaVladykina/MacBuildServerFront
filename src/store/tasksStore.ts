@@ -1,7 +1,7 @@
 import {action, makeObservable, observable, remove, runInAction} from "mobx";
 import type {IRootStore} from "./index";
-import type {ITask} from "./taskStore";
 import {apiTask} from "../api/api";
+import type {ITask, ResFetchTask} from "../commons/types";
 
 export class TasksStore {
   tasks: ITask[] = [];
@@ -9,12 +9,13 @@ export class TasksStore {
   constructor(rootStore: IRootStore) {
     makeObservable(this, {
       tasks: observable,
-      addTask: action.bound,
+      addTask: action,
       remove: action,
       update: action,
       fetch: action
     });
   }
+
 
   async fetch() {
     try {
@@ -22,7 +23,18 @@ export class TasksStore {
       if (res.ok) {
         const data = await res.json();
         runInAction(() => {
-          this.tasks = data
+          this.tasks = data.map((el: ResFetchTask): ITask => {
+            return ({
+              key: el._id,
+              create: new Date(el.create),
+              update: new Date(el.update),
+              deadline: el.deadline,
+              title: el.title,
+              description: el.description,
+              status: el.status,
+              priority: el.priority
+            })
+          })
         })
       }
     } catch (error: any) {
@@ -31,13 +43,22 @@ export class TasksStore {
   }
 
 
-  async addTask(title: string) {
+  async addTask(task: any) {
     try {
-      const res = await apiTask.create(title)
+      const res = await apiTask.create(task)
       if (res.ok) {
-        const task = await res.json();
+        const task: ResFetchTask = await res.json();
         runInAction(() => {
-          this.tasks.push(task)
+          this.tasks.push({
+            key: task._id,
+            create: new Date(task.create),
+            update: new Date(task.update),
+            deadline: task.deadline,
+            title: task.title,
+            description: task.description,
+            status: task.status,
+            priority: task.priority
+          })
         })
       }
     } catch (error: any) {
@@ -59,6 +80,7 @@ export class TasksStore {
     }
   }
 
+
   async update(task: any) {
     // try {
     //   const res = await apiTask.update(task)
@@ -72,4 +94,5 @@ export class TasksStore {
     //   console.log('Error')
     // }
   }
+
 }

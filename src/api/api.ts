@@ -1,6 +1,8 @@
-import {ITask} from "../store/taskStore";
+import {ITask} from "../commons/types";
 
-const baseUrl = 'http://localhost:3001'
+
+const baseUrl = '/api';
+//'http://localhost:3001'
 
 export const apiTask = {
   fetch() {
@@ -18,13 +20,13 @@ export const apiTask = {
       body: JSON.stringify({task})
     })
   },
-  create(title: string) {
+  create(task: any) {
     return fetch(`${baseUrl}/tasks`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
       },
-      body: JSON.stringify({title})
+      body: JSON.stringify({task})
     })
   },
   remove(key: string) {
@@ -43,6 +45,27 @@ export const apiTask = {
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({task})
+    })
+  }
+}
+
+export const apiAuth = {
+  registration(email: string, password: string, confirmPassword: string) {
+    return fetch(`${baseUrl}/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({email, password, confirmPassword})
+    })
+  },
+  login(email: string, password: string) {
+    return fetch(`${baseUrl}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({email, password})
     })
   }
 }

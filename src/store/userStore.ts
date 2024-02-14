@@ -1,12 +1,9 @@
 import {IRootStore} from "./index";
-import {makeObservable, observable} from "mobx";
+import {action, makeObservable, observable, runInAction} from "mobx";
+import {apiAuth} from "../api/api";
+import {IUserType} from "../commons/types";
 
-export interface IUserType {
-  id: string
-  name: string
-  email: string
-  isLogin: boolean
-}
+
 
 export class UserStore implements IUserType {
   id = ""
@@ -19,7 +16,35 @@ export class UserStore implements IUserType {
       id: observable,
       name: observable,
       email: observable,
-      isLogin: observable
+      isLogin: observable,
+      register: action,
+      login:action
     });
+  }
+
+  async register(email: string, password: string, confirmPassword: string) {
+    try {
+      const res = await apiAuth.registration(email, password, confirmPassword)
+      if (res.ok) {
+        runInAction(() => {
+          console.log(res.ok)
+        })
+      }
+    } catch (error: any) {
+      console.log('Error')
+    }
+  }
+
+  async login(email: string, password: string,) {
+    try {
+      const res = await apiAuth.login(email, password)
+      if (res.ok) {
+        runInAction(() => {
+          console.log(res.ok)
+        })
+      }
+    } catch (error: any) {
+      console.log('Error')
+    }
   }
 }

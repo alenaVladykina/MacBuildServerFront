@@ -1,29 +1,17 @@
-import {PriorityTaskType, StatusTaskType} from "../types";
+import {ITask, PriorityTaskType, ResFetchTask, StatusTaskType} from "../commons/types";
 import {action, makeObservable, observable, runInAction} from "mobx";
 import {apiTask} from "../api/api";
-import {IRootStore} from "./index";
 
-
-export interface ITask {
-  key: string
-  create: Date
-  update: Date
-  deadline: Date
-  title: string
-  description: string
-  status: StatusTaskType
-  priority: PriorityTaskType
-}
 
 export class TaskStore implements ITask {
   key = ''
   create: Date = new Date()
   update: Date = new Date()
-  deadline: Date = new Date()
+  deadline: string = ''
   title = ''
   description = ''
-  status: StatusTaskType = 'Planned'
-  priority: PriorityTaskType = 'Low'
+  status: StatusTaskType = 'In Progress'
+  priority: PriorityTaskType = 'High'
 
   constructor() {
     makeObservable(this, {
@@ -41,19 +29,33 @@ export class TaskStore implements ITask {
   }
 
   async fetch(taskId: string) {
+
+    if (!taskId) {
+      runInAction(() => {
+        this.key = ''
+        this.create = new Date()
+        this.update = new Date()
+        this.deadline = ''
+        this.title = ''
+        this.description = ''
+        this.status = 'In Progress'
+        this.priority = 'High'
+      })
+    }
+
     try {
       const res = await apiTask.fetchTask(taskId)
       if (res.ok) {
-        const data = await res.json();
+        const task: ResFetchTask = await res.json();
         runInAction(() => {
-          this.key = data.key
-          this.create = data.create
-          this.update = data.update
-          this.deadline = data.deadline
-          this.title = data.title
-          this.description = data.description
-          this.status = data.status
-          this.priority = data.priority
+          this.key = task._id
+          this.create = new Date(task.create)
+          this.update = new Date(task.update)
+          this.deadline = task.deadline
+          this.title = task.title
+          this.description = task.description
+          this.status = task.status
+          this.priority = task.priority
         })
       }
     } catch (error: any) {

@@ -1,6 +1,5 @@
 import {createContext} from "react";
 import {UserStore} from "./userStore";
-import type {IUserType} from "./userStore";
 import {TasksStore} from "./tasksStore";
 import {TaskStore} from "./taskStore";
 
@@ -11,7 +10,7 @@ export interface IRootStore {
 
 class RootStore implements IRootStore {
   tasksStore: TasksStore;
-  userStore: IUserType;
+  userStore: UserStore;
   taskStore: TaskStore;
 
   constructor() {

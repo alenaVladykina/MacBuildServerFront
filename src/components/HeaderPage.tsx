@@ -2,7 +2,7 @@ import React from 'react';
 import {Menu} from "antd";
 import {Header} from "antd/es/layout/layout";
 import {Link} from 'react-router-dom'
-import {ItemMenu, MenuType} from "../types";
+import {ItemMenu, MenuType} from "../commons/types";
 
 const items: MenuType = [
   {key: '/tasks', label: <Link to='/'>Tasks</Link>},
@@ -20,6 +20,7 @@ const HeaderPage = () => {
       alignItems: 'center',
     }}>
       <Menu
+        inlineIndent={12}
         theme="dark"
         mode="horizontal"
         defaultSelectedKeys={['tasks']}
