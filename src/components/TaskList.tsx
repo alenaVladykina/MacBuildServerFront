@@ -7,6 +7,7 @@ import {observer} from "mobx-react-lite";
 import {StoreContext} from "../store";
 import {toJS} from "mobx";
 import {correctDate} from "../commons/utils";
+
 const {Text} = Typography;
 
 
@@ -130,8 +131,13 @@ const TaskList = observer(() => {
     return (
       <Content>
         <Flex justify='end' style={{marginTop: '30px', marginBottom: '30px', marginRight: '30px'}}>
-          <Button onClick={() => navigate('/add')}
-                  type="primary">add Task</Button>
+          <Button
+            onClick={() => navigate('/add')}
+            type="primary"
+            size='middle'
+          >
+            Add Task
+          </Button>
         </Flex>
         <Table columns={columns}
                pagination={false}

@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react';
-import {Button, Checkbox, Col, Flex, Form, Input, Layout, Row} from "antd";
+import React, {useContext,} from 'react';
+import {Button, Col, Form, Input, Layout, Row} from "antd";
 import {Typography} from 'antd';
 import {observer} from "mobx-react-lite";
 import {StoreContext} from "../../store";
@@ -35,7 +35,7 @@ const AuthorizationForm = observer(() => {
             initialValues={{remember: true}}
             onFinish={onFinish}
           >
-            <Form.Item <FieldType>
+            <Form.Item<FieldType>
               label="Email"
               name="email"
               wrapperCol={{offset: 2, span: 12}}

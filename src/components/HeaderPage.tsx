@@ -1,13 +1,16 @@
 import React from 'react';
 import {Menu} from "antd";
-import {Header} from "antd/es/layout/layout";
 import {Link} from 'react-router-dom'
-import {ItemMenu, MenuType} from "../commons/types";
+import {MenuType} from "../commons/types";
+import {Layout} from 'antd';
+
+const {Header} = Layout;
 
 const items: MenuType = [
   {key: '/tasks', label: <Link to='/'>Tasks</Link>},
   {key: '/profile', label: <Link to='/profile'>Profile</Link>}
 ]
+
 
 const HeaderPage = () => {
   return (
@@ -15,17 +18,14 @@ const HeaderPage = () => {
       position: 'sticky',
       top: 0,
       zIndex: 1,
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
+      //width: '100%',
+      backgroundColor: 'transparent',
     }}>
       <Menu
-        inlineIndent={12}
-        theme="dark"
+        theme="light"
         mode="horizontal"
-        defaultSelectedKeys={['tasks']}
         items={items}
-        style={{flex: 1, minWidth: 0,}}
+        style={{width: '100%', display: 'flex', justifyContent: "end"}}
       />
     </Header>
   );
