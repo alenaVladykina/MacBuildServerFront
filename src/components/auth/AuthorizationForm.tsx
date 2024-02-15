@@ -1,5 +1,5 @@
-import React, {useContext,} from 'react';
-import {Button, Col, Form, Input, Layout, Row} from "antd";
+import React, {useContext, useEffect, useState,} from 'react';
+import {Button, Col, Flex, Form, Input, Layout, Row} from "antd";
 import {Typography} from 'antd';
 import {observer} from "mobx-react-lite";
 import {StoreContext} from "../../store";
@@ -14,66 +14,80 @@ type FieldType = {
 };
 
 const AuthorizationForm = observer(() => {
-  const {userStore} = useContext(StoreContext)
-  const navigate = useNavigate()
-  const onClickNavigate = () => {
-    navigate('/register')
-  }
+    const {userStore} = useContext(StoreContext)
+    const navigate = useNavigate()
+    const isLogin = userStore.isLogin;
 
-  const onFinish = (values: any) => {
-    userStore.login(values.email, values.password)
-  };
+    if (isLogin) {
+      setTimeout(() => navigate('/'), 0)
+    }
 
-  return (
-    <Content style={{width: '100%', marginTop: '100px'}}>
-      <Row justify={'start'} style={{textAlign: "center"}}>
-        <Col span={8} offset={8}>
-          <Title level={2} style={{marginBottom: '30px', textAlign: "center"}}>Sign In</Title>
-          <Form
-            name="authorizationForm"
-            labelCol={{span: 4}}
-            initialValues={{remember: true}}
-            onFinish={onFinish}
-          >
-            <Form.Item<FieldType>
-              label="Email"
-              name="email"
-              wrapperCol={{offset: 2, span: 12}}
-              rules={[{required: true, message: 'Invalid email!', type: 'email'}]}
+    const onClickNavigate = () => {
+      navigate('/register')
+    }
+
+    const onFinish = (values: any) => {
+      userStore.login(values.email, values.password)
+    };
+
+    return (
+      <Content style={{width: '100%', marginTop: '100px'}}>
+        <Row justify={'start'}>
+          <Col xl={{span: 6, offset: 8}}
+               lg={{span: 12, offset: 6}}
+               md={{span: 16, offset: 4}}
+               sm={{span: 24, offset: 2}}>
+            <Title level={2} style={{marginBottom: '30px', textAlign: "center"}}>Sign In</Title>
+            <Form
+              name="authorizationForm"
+              labelCol={{span: 4}}
+              initialValues={{remember: true}}
+              onFinish={onFinish}
+              wrapperCol={{span: 18, offset: 2}}
             >
-              <Input/>
-            </Form.Item>
+              <Form.Item<FieldType>
+                label="Email"
+                name="email"
+                rules={[{required: true, message: 'Invalid email!', type: 'email'}]}
+              >
+                <Input/>
+              </Form.Item>
 
-            <Form.Item<FieldType>
-              label="Password"
-              name="password"
-              wrapperCol={{offset: 2, span: 12}}
-              rules={[{required: true, message: 'Short password!', min: 4}]}
-            >
-              <Input.Password/>
-            </Form.Item>
+              <Form.Item<FieldType>
+                label="Password"
+                name="password"
+                rules={[{required: true, message: 'Short password!', min: 4}]}
+              >
+                <Input.Password/>
+              </Form.Item>
+              <Flex align={'center'} vertical>
+                <Form.Item>
+                  <Button type="primary"
+                          htmlType="submit">
+                    Sing In
+                  </Button>
+                </Form.Item>
+                <Text type="secondary"
+                      style={{display: "block", textAlign: "center"}}>
+                  Don't have an account?
+                </Text>
+                <Button type="link"
+                        onClick={onClickNavigate}
+                >Sign Up</Button>
+                {/*<Button type="link"*/}
+                {/*        onClick={() => (fetch('/api/user', {*/}
+                {/*          method: 'POST',*/}
+                {/*        })).then((res) => console.log(res))}*/}
+                {/*>auth</Button>*/}
+              </Flex>
+            </Form>
 
-            <Form.Item wrapperCol={{offset: 4, span: 16}}>
-              <Button type="primary"
-                      htmlType="submit">
-                Sing In
-              </Button>
-            </Form.Item>
-          </Form>
-          <Text type="secondary"
-                style={{display: "block", textAlign: "center"}}>
-            Don't have an account?
-          </Text>
-          <Button type="link"
-                  onClick={onClickNavigate}
-          >Sign Up</Button>
-        </Col>
-      </Row>
-    </Content>
-  );
-});
+          </Col>
+        </Row>
+      </Content>
+    );
+  })
+;
 
 export default AuthorizationForm;
 
-//Don't have an account?
-//Sign Up

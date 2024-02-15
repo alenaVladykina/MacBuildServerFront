@@ -15,7 +15,7 @@ const Task = observer(() => {
   const {taskStore, tasksStore} = useContext(StoreContext);
   const taskKey = useParams().id;
   const navigate = useNavigate();
-  const [task, setTask] = useState<ITask>(taskStore);
+  const [task, setTask] = useState<any>(taskStore);
 
 
   useEffect(() => {
@@ -65,7 +65,11 @@ const Task = observer(() => {
         Back to Task List
       </Button>
       <Row justify={'start'}>
-        <Col span={8} offset={8}>
+        <Col xl={{span: 8, offset: 8}}
+             lg={{span: 16, offset: 4}}
+             md={{span: 16, offset: 4}}
+             sm={{span: 24, offset: 2}}
+             span={8} offset={8}>
           <h2 style={{textAlign: "center"}}>{taskKey ? 'Update Task' : 'Add task'}</h2>
           <Form
             labelCol={{span: 4}}

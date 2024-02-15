@@ -7,6 +7,8 @@ import {observer} from "mobx-react-lite";
 import {StoreContext} from "../store";
 import {toJS} from "mobx";
 import {correctDate} from "../commons/utils";
+import {v1} from "uuid";
+import {ITask, IUserType} from "../commons/types";
 
 const {Text} = Typography;
 
@@ -14,40 +16,43 @@ const {Text} = Typography;
 const TaskList = observer(() => {
     const navigate = useNavigate();
     const {tasksStore} = useContext(StoreContext);
+
     useEffect(() => {
-      tasksStore.fetch()
+      tasksStore.fetch();
     }, [])
 
     const columns: any = [
       {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'Name / Description',
+        dataIndex: v1(),
+        column: 204,
+        width: '30%',
+        align: 'left',
         render: (_: any, record: any) => {
-
-          return (
-            <Text>{record.title}</Text>
-          )
+          const key = record.key;
+          return key ? <Text>{record.title}</Text> : <Text>{record.description}</Text>
         },
       },
       {
         title: 'Deadline',
-        dataIndex: 'deadline',
-        key: 'deadline',
+        align: 'center',
+        dataIndex: v1(),
         render: (_: any, record: any) => {
-          const data: Date = new Date(record.deadline)
-          const stringDate = <>
-            <span>{correctDate(data.getDate())}</span>.
-            <span>{correctDate(data.getMonth() + 1)}</span>.
-            <span>{correctDate(data.getFullYear())}</span>
-          </>
+          const data: Date | null = record.deadline ? new Date(record.deadline) : null
+
+          const stringDate = data ?
+            <>
+              <span>{correctDate(data.getDate())}</span>.
+              <span>{correctDate(data.getMonth() + 1)}</span>.
+              <span>{correctDate(data.getFullYear())}</span>
+            </> : '-'
           return (<span>{stringDate}</span>)
         }
       },
       {
         title: 'Status',
-        dataIndex: 'status',
-        key: 'status',
+        dataIndex: v1(),
+        align: 'center',
         render: (_: any, record: any) => {
           let textType;
           if (record.status === 'In Progress') {
@@ -78,8 +83,7 @@ const TaskList = observer(() => {
       },
       {
         title: 'Priority',
-        dataIndex: 'priority',
-        key: 'priority',
+        dataIndex: v1(),
         render: (_: any, record: any) =>
           (
             <Text type={record.priority === 'High' ? 'danger' : 'secondary'}>
@@ -104,16 +108,23 @@ const TaskList = observer(() => {
       },
       {
         title: 'Actions',
-        dataIndex: 'actions', key: 'actions',
+        dataIndex: v1(),
         render: (_: any, record: any) => {
+
+          if (!record.key) {
+            return null
+          }
+
           const onClick = () => {
             navigate(`/task/${record.key}`)
           }
+
           return (
             <Space size={30}>
               <Button
                 type="link"
-                onClick={onClick}>
+                onClick={onClick}
+              >
                 Edit...
               </Button>
               <Button
@@ -125,8 +136,26 @@ const TaskList = observer(() => {
           )
         },
       },
-    ];
+      {
+        title: 'Update',
+        dataIndex: v1(),
+        render: (_: any, record: any) => {
+          const data: Date = new Date(record.update)
 
+          const stringDate =
+            <>
+              <span>{correctDate(data.getDate())}</span>.
+              <span>{correctDate(data.getMonth() + 1)}</span>.
+              <span>{correctDate(data.getFullYear())} </span>
+              <span> {correctDate(data.getHours())}</span>:
+              <span>{correctDate(data.getMinutes())}</span>
+            </>
+
+          return (<p>{stringDate}</p>)
+        }
+      },
+    ]
+    const tasks: ITask[] = tasksStore.tasks
 
     return (
       <Content>
@@ -142,6 +171,7 @@ const TaskList = observer(() => {
         <Table columns={columns}
                pagination={false}
                dataSource={toJS(tasksStore.tasks)}
+               rowKey={(record) => record.create}
         />
       </Content>
     );

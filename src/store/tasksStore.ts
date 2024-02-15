@@ -14,6 +14,7 @@ export class TasksStore {
       update: action,
       fetch: action
     });
+    console.log(this.tasks)
   }
 
 
@@ -26,13 +27,14 @@ export class TasksStore {
           this.tasks = data.map((el: ResFetchTask): ITask => {
             return ({
               key: el._id,
-              create: new Date(el.create),
-              update: new Date(el.update),
+              create: el.create,
+              update: el.update,
               deadline: el.deadline,
               title: el.title,
               description: el.description,
               status: el.status,
-              priority: el.priority
+              priority: el.priority,
+              children: el.children
             })
           })
         })
@@ -51,8 +53,8 @@ export class TasksStore {
         runInAction(() => {
           this.tasks.push({
             key: task._id,
-            create: new Date(task.create),
-            update: new Date(task.update),
+            create: task.create,
+            update: task.update,
             deadline: task.deadline,
             title: task.title,
             description: task.description,
@@ -71,8 +73,7 @@ export class TasksStore {
       const res = await apiTask.remove(key)
       if (res.ok) {
         runInAction(() => {
-          const pos = this.tasks.findIndex(task => task.key === key);
-          pos > -1 && remove(this.tasks, pos.toString());
+          this.tasks = this.tasks.filter((el) => el.key !== key)
         })
       }
     } catch (error: any) {

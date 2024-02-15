@@ -1,15 +1,23 @@
-import React, {useEffect} from 'react';
-import {Outlet} from "react-router-dom";
+import React, {useContext, useEffect} from 'react';
+import {Outlet, useNavigate} from "react-router-dom";
 import './App.css'
 import HeaderPage from "./components/HeaderPage";
 import {Layout} from "antd";
+import {observer} from "mobx-react-lite";
+import {StoreContext} from "./store";
 
 
-export const App = () => {
+export const App = observer(() => {
+  const {userStore} = useContext(StoreContext)
+  const isLogin = userStore.isLogin
+
 
   useEffect(() => {
-    fetch('http://localhost:3001/auth', {})
+    if (!isLogin) {
+      userStore.authMe();
+    }
   })
+
   return (
     <div className={'app'}>
       <HeaderPage/>
@@ -18,4 +26,4 @@ export const App = () => {
       </Layout>
     </div>
   )
-}
+});

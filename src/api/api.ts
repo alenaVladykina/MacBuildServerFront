@@ -67,5 +67,14 @@ export const apiAuth = {
       },
       body: JSON.stringify({email, password})
     })
+  },
+  getUser() {
+    return fetch(`${baseUrl}/user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({})
+    })
   }
 }

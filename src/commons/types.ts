@@ -1,4 +1,5 @@
 import React from "react";
+import {TableProps} from "antd";
 
 export type MenuType = ItemMenu[]
 
@@ -22,31 +23,32 @@ export type  TaskType = {
 }
 
 export type ResFetchTask = {
-  "create": string,
-  "update": string,
-  "deadline": string,
-  "title": string,
-  "status": StatusTaskType,
-  "description": string,
-  "priority": PriorityTaskType,
-  "userId": string,
-  "_id": string
+  create: string,
+  update: string,
+  deadline: string,
+  title: string,
+  status: StatusTaskType,
+  description: string,
+  priority: PriorityTaskType,
+  userId: string,
+  _id: string,
+  children: ResFetchTask[]
 }
 
 export interface ITask {
   key: string
-  create: Date
-  update: Date
+  create: string
+  update: string
   deadline: string
   title: string
   description: string
   status: StatusTaskType
   priority: PriorityTaskType
+  children?:ResFetchTask[]
 }
 
 export interface IUserType {
   id: string
-  name: string
   email: string
   isLogin: boolean
 }
@@ -58,3 +60,18 @@ export type  ReqUpdateTask = {
   status: string
   priority: string
 }
+
+export interface AppStoreType {
+  errorMessage: string | null,
+  payloadMessage: string | null,
+}
+
+interface DataType {
+  key: React.Key;
+  name: string;
+  age: number;
+  address: string;
+  description: string;
+}
+
+

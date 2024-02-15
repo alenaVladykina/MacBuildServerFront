@@ -5,8 +5,8 @@ import {apiTask} from "../api/api";
 
 export class TaskStore implements ITask {
   key = ''
-  create: Date = new Date()
-  update: Date = new Date()
+  create: string = ''
+  update: string = ''
   deadline: string = ''
   title = ''
   description = ''
@@ -33,8 +33,8 @@ export class TaskStore implements ITask {
     if (!taskId) {
       runInAction(() => {
         this.key = ''
-        this.create = new Date()
-        this.update = new Date()
+        this.create = ''
+        this.update = ''
         this.deadline = ''
         this.title = ''
         this.description = ''
@@ -49,13 +49,14 @@ export class TaskStore implements ITask {
         const task: ResFetchTask = await res.json();
         runInAction(() => {
           this.key = task._id
-          this.create = new Date(task.create)
-          this.update = new Date(task.update)
+          this.create = task.create
+          this.update = task.update
           this.deadline = task.deadline
           this.title = task.title
           this.description = task.description
           this.status = task.status
           this.priority = task.priority
+
         })
       }
     } catch (error: any) {

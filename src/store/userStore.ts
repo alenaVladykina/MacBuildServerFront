@@ -1,24 +1,23 @@
 import {IRootStore} from "./index";
-import {action, makeObservable, observable, runInAction} from "mobx";
+import {action, makeObservable, observable, onReactionError, runInAction} from "mobx";
 import {apiAuth} from "../api/api";
 import {IUserType} from "../commons/types";
-
+import {AppStore} from "./appStore";
 
 
 export class UserStore implements IUserType {
   id = ""
-  name = ""
   email = ""
   isLogin = false
 
   constructor(rootStore: IRootStore) {
     makeObservable(this, {
       id: observable,
-      name: observable,
       email: observable,
       isLogin: observable,
       register: action,
-      login:action
+      login: action,
+      authMe: action
     });
   }
 
@@ -31,20 +30,48 @@ export class UserStore implements IUserType {
         })
       }
     } catch (error: any) {
-      console.log('Error')
+      console.log(error)
+    }
+    onReactionError((error) => {
+      console.log(error)
+    });
+
+  }
+
+  async login(email: string, password: string) {
+    try {
+      const res = await apiAuth.login(email, password)
+      let response = await res.json();
+      if (res.ok) {
+        runInAction(() => {
+          this.isLogin = response.isLogin
+          this.email = response.email
+          this.id = response.userId
+        })
+      } else {
+        console.log(response)
+        new AppStore(response.errorText)
+      }
+    } catch (error: any) {
+
     }
   }
 
-  async login(email: string, password: string,) {
+  async authMe() {
     try {
-      const res = await apiAuth.login(email, password)
+      const res = await apiAuth.getUser()
+      let response = await res.json();
       if (res.ok) {
         runInAction(() => {
-          console.log(res.ok)
+          this.isLogin = response.isLogin
         })
+      } else {
+        new AppStore(response.errorText)
       }
     } catch (error: any) {
-      console.log('Error')
+      // new AppStore(error)
     }
+
+
   }
-}
+};
