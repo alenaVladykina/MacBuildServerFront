@@ -1,23 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Content} from "antd/es/layout/layout";
 import {observer} from "mobx-react-lite";
-import {Divider, Drawer, Typography} from 'antd';
+import {Row, Typography, Col} from 'antd';
+import {StoreContext} from "../store";
 
-const {Title} = Typography;
+const {Title, Text, Paragraph} = Typography;
 
 const Profile = observer(() => {
 
+  const {userStore} = useContext(StoreContext);
   return (
-    <Content style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-      <div>
-        <Title level={2}>Profile</Title>
-        <div>
-          <p>UserMame</p>
-          <p>Email</p>
-        </div>
-        <Title level={3}>History tasks</Title>
-      </div>
-      <Divider/>
+    <Content>
+      <Row justify={'start'}>
+        <Col span={16} offset={2}>
+          <Title level={2}>Profile</Title>
+          <Paragraph>
+            <Text strong={true}>Email :</Text>
+            <Text> {userStore.email}</Text>
+          </Paragraph>
+
+        </Col>
+      </Row>
     </Content>
 
   );

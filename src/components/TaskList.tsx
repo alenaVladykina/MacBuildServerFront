@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {Content} from "antd/es/layout/layout";
-import {Button, Flex, Input, Space, Table, Tag, Typography} from "antd";
+import {Button, Flex, Space, Table, Tag, Typography, Row, Col} from "antd";
 import {DeleteOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";
 import {observer} from "mobx-react-lite";
@@ -8,7 +8,7 @@ import {StoreContext} from "../store";
 import {toJS} from "mobx";
 import {correctDate} from "../commons/utils";
 import {v1} from "uuid";
-import {ITask, IUserType} from "../commons/types";
+
 
 const {Text} = Typography;
 
@@ -25,7 +25,6 @@ const TaskList = observer(() => {
       {
         title: 'Name / Description',
         dataIndex: v1(),
-        column: 204,
         width: '30%',
         align: 'left',
         render: (_: any, record: any) => {
@@ -107,6 +106,24 @@ const TaskList = observer(() => {
         onFilter: (value: string, record: any) => record.priority.indexOf(value) === 0,
       },
       {
+        title: 'Update',
+        dataIndex: v1(),
+        render: (_: any, record: any) => {
+          const data: Date = new Date(record.update)
+
+          const stringDate =
+            <>
+              <span>{correctDate(data.getDate())}</span>.
+              <span>{correctDate(data.getMonth() + 1)}</span>.
+              <span>{correctDate(data.getFullYear())} </span>
+              <span> {correctDate(data.getHours())}</span>:
+              <span>{correctDate(data.getMinutes())}</span>
+            </>
+
+          return (<p>{stringDate}</p>)
+        }
+      },
+      {
         title: 'Actions',
         dataIndex: v1(),
         render: (_: any, record: any) => {
@@ -125,7 +142,7 @@ const TaskList = observer(() => {
                 type="link"
                 onClick={onClick}
               >
-                Edit...
+                Edit
               </Button>
               <Button
                 type="primary"
@@ -136,30 +153,13 @@ const TaskList = observer(() => {
           )
         },
       },
-      {
-        title: 'Update',
-        dataIndex: v1(),
-        render: (_: any, record: any) => {
-          const data: Date = new Date(record.update)
-
-          const stringDate =
-            <>
-              <span>{correctDate(data.getDate())}</span>.
-              <span>{correctDate(data.getMonth() + 1)}</span>.
-              <span>{correctDate(data.getFullYear())} </span>
-              <span> {correctDate(data.getHours())}</span>:
-              <span>{correctDate(data.getMinutes())}</span>
-            </>
-
-          return (<p>{stringDate}</p>)
-        }
-      },
     ]
-    const tasks: ITask[] = tasksStore.tasks
 
     return (
       <Content>
-        <Flex justify='end' style={{marginTop: '30px', marginBottom: '30px', marginRight: '30px'}}>
+        <Flex justify='end' style={{marginTop: '30px', marginBottom: '30px'}}>
+
+          <Space direction="horizontal" size='middle'/>
           <Button
             onClick={() => navigate('/add')}
             type="primary"
@@ -170,6 +170,7 @@ const TaskList = observer(() => {
         </Flex>
         <Table columns={columns}
                pagination={false}
+               loading={tasksStore.isLoading}
                dataSource={toJS(tasksStore.tasks)}
                rowKey={(record) => record.create}
         />

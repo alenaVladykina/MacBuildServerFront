@@ -11,8 +11,8 @@ type PropsType = {
 
 export const ProtectedRouter = observer((props: PropsType) => {
   const {userStore} = useContext(StoreContext);
-  const isLogin = userStore.isLogin
 
-
-  return isLogin ? props.children : <Navigate to="/auth" replace={true}/>;
+  return userStore.isLogin
+    ? props.children
+    : <Navigate to="/auth" replace={true}/>;
 });

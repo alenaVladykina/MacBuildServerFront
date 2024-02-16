@@ -6,13 +6,12 @@ import AuthorizationForm from "../auth/AuthorizationForm";
 import RegistrationForm from "../auth/RegistrationForm";
 import Profile from "../Profile";
 import React from "react";
-import {ProtectedRouter} from "./ProtectedRouter";
 
 
 const publicRoutes = [
   {
     path: "/auth",
-    element: <AuthorizationForm/>,
+    element: <AuthorizationForm/>
   },
   {
     path: "/register",
@@ -23,33 +22,21 @@ const publicRoutes = [
 const privateRoutes = [
   {
     path: "/",
-    element:
-      <ProtectedRouter>
-        <TaskList/>
-      </ProtectedRouter>
+    element: <TaskList/>
 
   },
   {
     path: "/add",
-    element:
-      <ProtectedRouter>
-        <Task/>
-      </ProtectedRouter>
+    element: <Task/>
   },
   {
     path: "/task/:id",
-    element:
-      <ProtectedRouter>
-        <Task/>
-      </ProtectedRouter>
+    element: <Task/>
   },
 
   {
     path: "/profile",
-    element:
-      <ProtectedRouter>
-        <Profile/>
-      </ProtectedRouter>
+    element: <Profile/>
   }
 ];
 

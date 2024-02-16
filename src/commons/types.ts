@@ -1,5 +1,5 @@
 import React from "react";
-import {TableProps} from "antd";
+import type {IStore} from "../store/store"
 
 export type MenuType = ItemMenu[]
 
@@ -47,10 +47,11 @@ export interface ITask {
   children?:ResFetchTask[]
 }
 
-export interface IUserType {
+export interface IUserType extends IStore {
   id: string
   email: string
   isLogin: boolean
+  error:string|null
 }
 
 export type  ReqUpdateTask = {

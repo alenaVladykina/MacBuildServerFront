@@ -44,7 +44,7 @@ export class TaskStore implements ITask {
     }
 
     try {
-      const res = await apiTask.fetchTask(taskId)
+      const res = await apiTask.fetchTask(taskId);
       if (res.ok) {
         const task: ResFetchTask = await res.json();
         runInAction(() => {
@@ -59,16 +59,12 @@ export class TaskStore implements ITask {
 
         })
       }
-    } catch (error: any) {
-      console.log(error)
-    }
+    } catch (e: any) {}
   }
 
   async edit(task: ITask) {
     try {
-      await apiTask.updateTask(task)
-    } catch (error: any) {
-      console.log(error)
-    }
+      await apiTask.updateTask(task);
+    } catch (e) {}
   }
 }

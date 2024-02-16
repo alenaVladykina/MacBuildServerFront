@@ -1,10 +1,9 @@
 import React, {ChangeEvent, useContext, useEffect, useState} from 'react';
-import {Button, DatePicker, Flex, Form, Input, Radio, Layout, RadioChangeEvent, Row, Col} from "antd";
+import {Button, DatePicker, Form, Input, Radio, Layout, RadioChangeEvent, Row, Col} from "antd";
 import {observer} from "mobx-react-lite";
 import {useNavigate, useParams} from "react-router-dom";
 import {StoreContext} from "../store";
 import {priorityOptions, statusOptions} from "../commons/data";
-import {ITask} from "../commons/types";
 import {ArrowLeftOutlined} from "@ant-design/icons";
 
 const {TextArea} = Input;
@@ -58,22 +57,22 @@ const Task = observer(() => {
   }
 
   return (
-    <Content style={{marginTop: "50px", marginRight: '50px'}}>
+    <Content style={{marginTop: "50px"}}>
       <Button type="link"
               onClick={onClickNavigateToTasks}
               icon={<ArrowLeftOutlined/>}>
         Back to Task List
       </Button>
-      <Row justify={'start'}>
-        <Col xl={{span: 8, offset: 8}}
-             lg={{span: 16, offset: 4}}
-             md={{span: 16, offset: 4}}
-             sm={{span: 24, offset: 2}}
-             span={8} offset={8}>
+      <Row justify={'center'}>
+        <Col xxl={{span: 8, offset: 0}}
+             xl={{span: 10, offset: 0}}
+             lg={{span: 16, offset: 0}}
+             md={{span: 16, offset: 0}}
+             sm={{span: 24, offset: 0}}>
           <h2 style={{textAlign: "center"}}>{taskKey ? 'Update Task' : 'Add task'}</h2>
           <Form
-            labelCol={{span: 4}}
-            wrapperCol={{span: 18, offset: 2}}
+            labelCol={{span: 6}}
+            wrapperCol={{span: 16, offset: 2}}
             layout="horizontal"
             disabled={false}
             style={{maxWidth: 600}}

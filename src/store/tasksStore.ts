@@ -1,26 +1,27 @@
-import {action, makeObservable, observable, remove, runInAction} from "mobx";
+import {action, makeObservable, observable, runInAction} from "mobx";
 import type {IRootStore} from "./index";
 import {apiTask} from "../api/api";
 import type {ITask, ResFetchTask} from "../commons/types";
+import {Store} from "./store";
 
-export class TasksStore {
+
+export class TasksStore extends Store {
   tasks: ITask[] = [];
 
   constructor(rootStore: IRootStore) {
+    super();
     makeObservable(this, {
       tasks: observable,
       addTask: action,
       remove: action,
-      update: action,
       fetch: action
     });
-    console.log(this.tasks)
   }
 
-
   async fetch() {
+    this.isLoading = true;
     try {
-      const res = await apiTask.fetch()
+      const res = await apiTask.fetch();
       if (res.ok) {
         const data = await res.json();
         runInAction(() => {
@@ -36,12 +37,11 @@ export class TasksStore {
               priority: el.priority,
               children: el.children
             })
-          })
+          });
+          this.isLoading = false;
         })
       }
-    } catch (error: any) {
-      console.log(error)
-    }
+    } catch (e) {}
   }
 
 
@@ -63,37 +63,17 @@ export class TasksStore {
           })
         })
       }
-    } catch (error: any) {
-      console.log('Error')
-    }
+    } catch (e) {}
   }
 
   async remove(key: string) {
     try {
-      const res = await apiTask.remove(key)
+      const res = await apiTask.remove(key);
       if (res.ok) {
         runInAction(() => {
-          this.tasks = this.tasks.filter((el) => el.key !== key)
+          this.tasks = this.tasks.filter((el) => el.key !== key);
         })
       }
-    } catch (error: any) {
-      console.log('Error')
-    }
+    } catch (e) {}
   }
-
-
-  async update(task: any) {
-    // try {
-    //   const res = await apiTask.update(task)
-    //   if (res.ok) {
-    //     runInAction(() => {
-    //       const pos = this.tasks.findIndex(task => task.key === key);
-    //       pos > -1 && remove(this.tasks, pos.toString());
-    //     })
-    //   }
-    // } catch (error: any) {
-    //   console.log('Error')
-    // }
-  }
-
 }

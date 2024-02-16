@@ -1,10 +1,11 @@
 import React, {useContext, useEffect} from 'react';
-import {Outlet, useNavigate} from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import './App.css'
 import HeaderPage from "./components/HeaderPage";
-import {Layout} from "antd";
+import {Layout, Skeleton, Row, Col} from "antd";
 import {observer} from "mobx-react-lite";
 import {StoreContext} from "./store";
+import {ProtectedRouter} from "./components/routes/ProtectedRouter";
 
 
 export const App = observer(() => {
@@ -20,10 +21,24 @@ export const App = observer(() => {
 
   return (
     <div className={'app'}>
-      <HeaderPage/>
-      <Layout style={{backgroundColor: 'transparent'}}>
-        <Outlet/>
-      </Layout>
+      <Skeleton loading={userStore.isLoading} active>
+        <ProtectedRouter>
+          <HeaderPage/>
+          <Row justify='center'>
+            <Col xxl={{span: 20, offset: 0}}
+                 xl={{span: 22, offset: 0}}
+                 lg={{span: 24, offset: 0}}
+                 md={{span: 24, offset: 0}}
+                 sm={{span: 24, offset: 0}}
+                 xs={{span: 24, offset: 0}}
+            >
+              <Layout style={{backgroundColor: 'transparent'}}>
+                <Outlet/>
+              </Layout>
+            </Col>
+          </Row>
+        </ProtectedRouter>
+      </Skeleton>
     </div>
   )
 });

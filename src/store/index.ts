@@ -3,18 +3,18 @@ import {UserStore} from "./userStore";
 import {TasksStore} from "./tasksStore";
 import {TaskStore} from "./taskStore";
 import {AppStore} from "./appStore";
-import {AppStoreType} from "../commons/types";
 
 
 export interface IRootStore {
   tasksStore: TasksStore
+  appStore: AppStore
 }
 
 class RootStore implements IRootStore {
   tasksStore: TasksStore;
   userStore: UserStore;
   taskStore: TaskStore;
-  appStore: AppStoreType;
+  appStore: AppStore;
 
   constructor() {
     this.tasksStore = new TasksStore(this);

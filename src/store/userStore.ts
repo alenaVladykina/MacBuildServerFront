@@ -1,17 +1,24 @@
 import {IRootStore} from "./index";
-import {action, makeObservable, observable, onReactionError, runInAction} from "mobx";
+import {action, makeObservable, observable, runInAction} from "mobx";
 import {apiAuth} from "../api/api";
 import {IUserType} from "../commons/types";
-import {AppStore} from "./appStore";
+import {Store} from "./store";
 
 
-export class UserStore implements IUserType {
+export class UserStore extends Store implements IUserType {
   id = ""
   email = ""
   isLogin = false
+  error = ''
+  rootStore;
 
   constructor(rootStore: IRootStore) {
+    super();
+
+    this.rootStore = rootStore;
+
     makeObservable(this, {
+      error: observable,
       id: observable,
       email: observable,
       isLogin: observable,
@@ -23,19 +30,8 @@ export class UserStore implements IUserType {
 
   async register(email: string, password: string, confirmPassword: string) {
     try {
-      const res = await apiAuth.registration(email, password, confirmPassword)
-      if (res.ok) {
-        runInAction(() => {
-          console.log(res.ok)
-        })
-      }
-    } catch (error: any) {
-      console.log(error)
-    }
-    onReactionError((error) => {
-      console.log(error)
-    });
-
+       await apiAuth.registration(email, password, confirmPassword)
+    } catch (e) {}
   }
 
   async login(email: string, password: string) {
@@ -48,30 +44,23 @@ export class UserStore implements IUserType {
           this.email = response.email
           this.id = response.userId
         })
-      } else {
-        console.log(response)
-        new AppStore(response.errorText)
       }
-    } catch (error: any) {
-
+    } catch (e) {
     }
   }
 
   async authMe() {
     try {
-      const res = await apiAuth.getUser()
+      this.isLoading = true;
+      const res = await apiAuth.getUser();
       let response = await res.json();
       if (res.ok) {
         runInAction(() => {
-          this.isLogin = response.isLogin
+          this.isLogin = response.isLogin;
+          this.email = response.email;
+          this.isLoading = false;
         })
-      } else {
-        new AppStore(response.errorText)
       }
-    } catch (error: any) {
-      // new AppStore(error)
-    }
-
-
+    } catch (e) {}
   }
-};
+}

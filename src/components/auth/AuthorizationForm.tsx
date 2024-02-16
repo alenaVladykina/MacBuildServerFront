@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState,} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Button, Col, Flex, Form, Input, Layout, Row} from "antd";
 import {Typography} from 'antd';
 import {observer} from "mobx-react-lite";
@@ -18,9 +18,13 @@ const AuthorizationForm = observer(() => {
     const navigate = useNavigate()
     const isLogin = userStore.isLogin;
 
-    if (isLogin) {
-      setTimeout(() => navigate('/'), 0)
-    }
+    useEffect(() => {
+      if (!isLogin) {
+        userStore.authMe();
+      } else {
+        navigate('/');
+      }
+    }, [isLogin]);
 
     const onClickNavigate = () => {
       navigate('/register')
@@ -32,18 +36,21 @@ const AuthorizationForm = observer(() => {
 
     return (
       <Content style={{width: '100%', marginTop: '100px'}}>
-        <Row justify={'start'}>
-          <Col xl={{span: 6, offset: 8}}
-               lg={{span: 12, offset: 6}}
-               md={{span: 16, offset: 4}}
-               sm={{span: 24, offset: 2}}>
+        <Row justify={'center'}>
+          <Col xxl={{span: 6, offset: 0}}
+               xl={{span: 8, offset: 0}}
+               lg={{span: 10, offset: 0}}
+               md={{span: 12, offset: 0}}
+               sm={{span: 18, offset: 0}}
+               xs={{span: 20, offset: 0}}
+          >
             <Title level={2} style={{marginBottom: '30px', textAlign: "center"}}>Sign In</Title>
             <Form
               name="authorizationForm"
-              labelCol={{span: 4}}
+              labelCol={{span: 6}}
               initialValues={{remember: true}}
               onFinish={onFinish}
-              wrapperCol={{span: 18, offset: 2}}
+              wrapperCol={{span: 16, offset: 2}}
             >
               <Form.Item<FieldType>
                 label="Email"
@@ -74,11 +81,6 @@ const AuthorizationForm = observer(() => {
                 <Button type="link"
                         onClick={onClickNavigate}
                 >Sign Up</Button>
-                {/*<Button type="link"*/}
-                {/*        onClick={() => (fetch('/api/user', {*/}
-                {/*          method: 'POST',*/}
-                {/*        })).then((res) => console.log(res))}*/}
-                {/*>auth</Button>*/}
               </Flex>
             </Form>
 

@@ -11,28 +11,16 @@ export class AppStore {
       payloadMessage: observable,
       fetchError: action,
       fetchPayload: action,
-      clean: action
     });
-    this.errorMessage = errorMessage
-    this.payloadMessage = payloadMessage
-    console.log(this)
+    this.errorMessage = errorMessage;
+    this.payloadMessage = payloadMessage;
   }
 
   fetchError() {
-    return this.errorMessage
+    return this.errorMessage;
   }
 
   fetchPayload() {
-    return this.payloadMessage
+    return this.payloadMessage;
   }
-
-  clean(error?: string | null, payload?: null | string) {
-    if (error === null) {
-      this.errorMessage = null;
-    } else if (payload === null) {
-      this.payloadMessage = null;
-    }
-  }
-
-
 }

@@ -29,18 +29,19 @@ const RegistrationForm = observer(() => {
 
   return (
     <Content style={{marginTop: '100px'}}>
-      <Row justify={'start'} style={{textAlign: "center"}}>
-        <Col xl={{span: 8, offset: 6}}
-             lg={{span: 14, offset: 5}}
-             md={{span: 16, offset: 4}}
-             sm={{span: 24, offset: 2}}>
+      <Row justify={'center'} style={{textAlign: "center"}}>
+        <Col xxl={{span: 8, offset: 0}}
+             xl={{span: 10, offset: 0}}
+             lg={{span: 12, offset: 0}}
+             md={{span: 16, offset: 0}}
+             sm={{span: 24, offset: 0}}>
           <Title level={2} style={{textAlign: 'center', marginBottom: '30px'}}>Sign Up</Title>
           <Form
             name="registerForm"
             initialValues={{remember: true}}
             onFinish={onFinish}
-            wrapperCol={{offset: 2, span: 16}}
-            labelCol={{span: 6}}
+            wrapperCol={{offset: 2, span: 14}}
+            labelCol={{span: 8}}
           >
             <Form.Item<FieldType>
               label="Email"

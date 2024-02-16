@@ -1,15 +1,15 @@
 import {ITask} from "../commons/types";
 
 
-const baseUrl = '/api';
-//'http://localhost:3001'
+
+const baseUrl = '/api'; // Proxy to http://localhost:3001
 
 export const apiTask = {
   fetch() {
-    return fetch(`${baseUrl}/tasks`)
+    return fetch(`${baseUrl}/tasks`);
   },
   fetchTask(taskId: string) {
-    return fetch(`${baseUrl}/task/${taskId}`)
+    return fetch(`${baseUrl}/task/${taskId}`);
   },
   updateTask(task: ITask) {
     return fetch(`${baseUrl}/tasks`, {
