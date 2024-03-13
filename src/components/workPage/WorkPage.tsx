@@ -10,6 +10,7 @@ const WorkPage = () => {
 
     return (
       <Work key={work.id}
+            page ='works'
             id={work.id}
             title={work.title}
             date={work.date}

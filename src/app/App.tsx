@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, lazy} from 'react';
 import './App.scss';
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {ProtectedRouter} from "../components/routes/ProtectedRouter";
 import {useSelector} from "react-redux";
 import {getData} from "../commons/selectors";
@@ -12,13 +12,25 @@ import {authTC} from "./appReduser";
 
 function App() {
   const isLogin = useSelector(getData).isLogin;
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const pathNav = localStorage.getItem('pathLocation')
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      if (!isLogin) {
-        dispatch(authTC())
-      }
-    }, [isLogin])
+
+  useEffect(() => {
+    localStorage.setItem('pathLocation', location.pathname)
+  }, [location])
+
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate(pathNav)
+    }
+    if (!isLogin) {
+      dispatch(authTC())
+    }
+  }, [isLogin])
 
 
   return (

@@ -13,6 +13,7 @@ export type WorksType = {
   text: string
   src: string
   keyword: string
+  page?: string
 }
 
 export type UserRegistrationType = {
@@ -20,7 +21,6 @@ export type UserRegistrationType = {
   password: string
   confirmPassword: string
 }
-
 
 
 export type UserLoginType = {
