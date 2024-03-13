@@ -18,6 +18,3 @@ root.render(
     <GlobalError/>
   </Provider>
 );
-
-export default class link {
-}
