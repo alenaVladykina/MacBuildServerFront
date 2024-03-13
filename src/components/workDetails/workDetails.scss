@@ -1,0 +1,58 @@
+.workDetails {
+  text-align: start;
+
+  .workDetails_title {
+    margin: 0 0 30px 0;
+    font-size: 34px;
+    font-weight: 700;
+  }
+
+  .work_subtitle {
+    display: flex;
+    column-gap: 16px;
+    margin-bottom: 23px;
+    align-items: baseline;
+
+    .work_date {
+      padding: 3px 10px;
+      background-color: #ff6464;
+      color: #FFFFFF;
+      border-radius: 15px;
+      font-weight: 900;
+
+    }
+  }
+
+  .work_picture {
+    .work_img {
+
+    }
+  }
+
+  .text {
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 23px;
+  }
+
+  .work_img {
+    width: 100%;
+    margin-bottom: 27px;
+  }
+
+
+  .heading1 {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 60px;
+    margin: 0;
+  }
+
+  .heading2 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 60px;
+    margin: 0;
+  }
+}

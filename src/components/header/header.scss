@@ -1,0 +1,36 @@
+.header {
+  display: block;
+  width: 1152px;
+  margin: 0 auto 90px auto;
+
+  .header_nav {
+    display: flex;
+    justify-content: end;
+
+    .menu {
+      display: flex;
+      margin-right: 60px;
+
+      .menu__item {
+        list-style-type: none;
+        font-size: 20px;
+        font-weight: 500;
+        color: #000000;
+        line-height: 30px;
+        padding: 5px 16px;
+
+        a {
+          text-decoration: none;
+          color: #000000;
+          font-weight: 500;
+          font-size: 20px;
+        }
+
+        .active {
+          color: #FF6464;
+        }
+      }
+
+    }
+  }
+}

@@ -1,78 +1,29 @@
-import React from "react";
-import type {IStore} from "../store/store"
-
-export type MenuType = ItemMenu[]
-
-export type ItemMenu = {
-  key: string
-  label: React.ReactNode
-}
-
-export type StatusTaskType = 'In Progress' | 'Done' | 'Planned'
-export type PriorityTaskType = 'High' | 'Low' | 'Middle'
-
-export type  TaskType = {
-  key: string
-  create: Date
-  update: Date
-  deadline: Date
-  title: string
-  description: string
-  status: StatusTaskType
-  priority: PriorityTaskType
-}
-
-export type ResFetchTask = {
-  create: string,
-  update: string,
-  deadline: string,
+export type PostType = {
+  id: string,
   title: string,
-  status: StatusTaskType,
-  description: string,
-  priority: PriorityTaskType,
-  userId: string,
-  _id: string,
-  children: ResFetchTask[]
+  date: string,
+  subtitle: string,
+  keywords: string
 }
 
-export interface ITask {
-  key: string
-  create: string
-  update: string
-  deadline: string
-  title: string
-  description: string
-  status: StatusTaskType
-  priority: PriorityTaskType
-  children?:ResFetchTask[]
-}
-
-export interface IUserType extends IStore {
+export type WorksType = {
   id: string
-  email: string
-  isLogin: boolean
-  error:string|null
-}
-
-export type  ReqUpdateTask = {
-  deadline: string,
   title: string
-  description: string
-  status: string
-  priority: string
+  date: number
+  text: string
+  src: string
+  keyword: string
 }
 
-export interface AppStoreType {
-  errorMessage: string | null,
-  payloadMessage: string | null,
-}
-
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-  description: string;
+export type UserRegistrationType = {
+  email: string
+  password: string
+  confirmPassword: string
 }
 
 
+
+export type UserLoginType = {
+  email: string
+  password: string
+}

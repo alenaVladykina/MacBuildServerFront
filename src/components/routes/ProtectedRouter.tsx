@@ -1,18 +1,17 @@
 import {Navigate} from "react-router-dom";
-import {observer} from "mobx-react-lite";
-import {useContext} from "react";
-import {StoreContext} from "../../store";
 import React from 'react';
+import {getData} from "../../commons/selectors";
+import {useAppSelector} from "../../app/store";
 
 type PropsType = {
-  children: React.ReactNode;
+  children: any;
 }
 
 
-export const ProtectedRouter = observer((props: PropsType) => {
-  const {userStore} = useContext(StoreContext);
+export const ProtectedRouter = (props: PropsType) => {
+  const isLogin = useAppSelector(getData).isLogin
 
-  return userStore.isLogin
+  return isLogin
     ? props.children
-    : <Navigate to="/auth" replace={true}/>;
-});
+    : <Navigate to="/auth" replace={true}/>
+};

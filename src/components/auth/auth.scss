@@ -1,0 +1,56 @@
+.auth {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+
+  .signIn_title {
+    margin-bottom: 30px;
+    color: #21243D;
+    text-align: start;
+  }
+
+  .form {
+    //display: flex;
+    width: 300px;
+    //flex-direction: column;
+    //justify-content: center;
+
+    .error {
+      text-align: start;
+      margin-bottom: 20px;
+      color: #FF6464;
+    }
+
+    .input {
+      display: block;
+      width: 100%;
+    }
+
+    .checkbox {
+      text-align: start;
+      margin-bottom: 15px;
+      color: #21243D;
+      font-weight: 500;
+
+      .checkbox_input {
+        margin-right: 10px;
+      }
+    }
+
+    .signUp {
+      display: inline;
+      text-align: start;
+      color: #21243D;
+      font-size: 16px;
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.7;
+        border-bottom: 1px solid #21243D;
+        width: 60px;
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+.postList {
+  background-color: #EDF7FA;
+  padding: 15px 0 30px 0;
+
+  .postList_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    .postList_title {
+      margin: 0 0 30px 0;
+      font-size: 22px;
+      font-weight: 400;
+      line-height: 44px;
+
+    }
+
+    .postList_link {
+      color: #00A8CC;
+      font-size: 16px;
+      font-weight: 400;
+      text-decoration: none;
+      padding: 15px;
+    }
+
+    .postList_link:hover {
+      opacity: 0.5;
+      border-bottom: 1px solid #00A8CC;
+    }
+  }
+
+
+  .posts_wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}

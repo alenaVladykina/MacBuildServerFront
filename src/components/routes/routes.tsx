@@ -1,51 +1,50 @@
-import {createHashRouter} from "react-router-dom";
-import {App} from "../../App";
-import TaskList from "../TaskList";
-import Task from "../Task";
-import AuthorizationForm from "../auth/AuthorizationForm";
-import RegistrationForm from "../auth/RegistrationForm";
-import Profile from "../Profile";
-import React from "react";
+import {createBrowserRouter} from "react-router-dom";
+import App from "../../app/App";
+import WorkPage from "../workPage/WorkPage";
+import Home from "../home/Home";
+import WorkDetails from "../workDetails/WorkDetails";
+import Blog from "../blog/Blog";
+import SignUp from "../auth/signUp";
+import {SignIn} from "../auth/signIn";
 
 
 const publicRoutes = [
   {
     path: "/auth",
-    element: <AuthorizationForm/>
+    element: <SignIn/>,
   },
   {
-    path: "/register",
-    element: <RegistrationForm/>,
-  }
+    path: "/registration",
+    element: <SignUp/>,
+  },
 ];
 
 const privateRoutes = [
   {
     path: "/",
-    element: <TaskList/>
+    element: <Home/>,
 
   },
   {
-    path: "/add",
-    element: <Task/>
+    path: "blog",
+    element: <Blog/>,
   },
   {
-    path: "/task/:id",
-    element: <Task/>
+    path: "works",
+    element: <WorkPage/>,
   },
-
   {
-    path: "/profile",
-    element: <Profile/>
-  }
+    path: "works/:id",
+    element: <WorkDetails/>,
+  },
 ];
 
 
-export const router = createHashRouter([
+export const router = createBrowserRouter([
+  ...publicRoutes,
   {
     path: "/",
     element: <App/>,
-    children: privateRoutes,
-  },
-  ...publicRoutes,
+    children: privateRoutes
+  }
 ]);

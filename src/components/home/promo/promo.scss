@@ -1,0 +1,54 @@
+.main {
+  padding: 100px 0 70px 0;
+
+  .main_header {
+    display: flex;
+    justify-content: space-between;
+
+    .main_content {
+      max-width: 506px;
+      text-align: start;
+
+      .main_title {
+        font-weight: 700;
+        padding-top: 18px;
+        font-size: 44px;
+        line-height: 60px;
+        color: #21243D;
+        margin-bottom: 40px;
+
+        & span {
+          display: block;
+        }
+      }
+
+      .main_subtitle {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        color: #21243D;
+        margin-bottom: 38px;
+      }
+
+      .main_button {
+        padding: 10px 20px;
+        font-weight: 500;
+        font-size: 20px;
+        color: #FFFFFF;
+        background-color: #FF6464;
+        border: none;
+
+      }
+    }
+
+    .avatar {
+      height: 250px;
+      width: 250px;
+      border-radius: 50%;
+      background-image: url('/src/assets/avatar.png');
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  }
+}
